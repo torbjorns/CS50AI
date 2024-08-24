@@ -1,2 +1,5 @@
 /.vscode
 degrees/degrees
+tictactoe/tictactoe
+*__pycache__
+degrees/__pycache__
