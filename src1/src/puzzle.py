@@ -26,8 +26,10 @@ for person in people:
         for h2 in houses:
             if h1 != h2:
                 knowledge.add(
-                    Implication(Symbol(f"{person}{h1}"), Not(Symbol(f"{person}{h2}")))
+                    Implication(Symbol(f"{person}{h1}"), Not(Symbol(f"{person}{h2}"))) # If person is in house 1, then person is not in house 2
                 )
+
+# print("Knowledge after 1: ", knowledge.formula())
 
 # Only one person per house.
 for house in houses:
@@ -35,19 +37,21 @@ for house in houses:
         for p2 in people:
             if p1 != p2:
                 knowledge.add(
-                    Implication(Symbol(f"{p1}{house}"), Not(Symbol(f"{p2}{house}")))
+                    Implication(Symbol(f"{p1}{house}"), Not(Symbol(f"{p2}{house}"))) # If person 1 is in house, then person 2 is not in house
                 )
 
+# print("Knowledge after 2: ", knowledge.formula())
+
 knowledge.add(
-    Or(Symbol("GilderoyGryffindor"), Symbol("GilderoyRavenclaw"))
+    Or(Symbol("GilderoyGryffindor"), Symbol("GilderoyRavenclaw")) # Gilderoy is in Gryffindor or Ravenclaw
 )
 
 knowledge.add(
-    Not(Symbol("PomonaSlytherin"))
+    Not(Symbol("PomonaSlytherin")) # Pomona is not in Slytherin
 )
 
 knowledge.add(
-    Symbol("MinervaGryffindor")
+    Symbol("MinervaGryffindor") # Minerva is in Gryffindor
 )
 
 for symbol in symbols:
