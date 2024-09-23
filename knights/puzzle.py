@@ -14,8 +14,8 @@ CKnave = Symbol("C is a Knave")
 knowledge0 = And(
     Or(AKnight, AKnave), # A is either a knight or a knave
     Not(And(AKnight, AKnave)), # A is not both a knight and a knave
-    Implication(And(AKnight, AKnave), AKnight), # A is a knight if and only if the statement is true 
-    Implication(Not(And(AKnight, AKnave)), AKnave) # A is a knave if and only if the statement is false
+    Implication(And(AKnight, AKnave), AKnight), # A is a knight if the statement is true 
+    Implication(Not(And(AKnight, AKnave)), AKnave) # A is a knave if the statement is false
 )
 
 # Puzzle 1
