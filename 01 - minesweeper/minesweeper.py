@@ -101,9 +101,11 @@ class Sentence():
         return f"{self.cells} = {self.count}"
 
     def known_mines(self):
-        """
-        Returns the set of all cells in self.cells known to be mines.
-        """
+        # Returns the set of all cells in self.cells known to be mines.
+        if len(self.cells) == self.count and self.count > 0:
+            return self.cells
+        return set()
+
         raise NotImplementedError
 
     def known_safes(self):
