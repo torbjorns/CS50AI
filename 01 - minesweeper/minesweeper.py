@@ -1,6 +1,7 @@
 import itertools
 import random
 
+
 class Minesweeper():
     """
     Minesweeper game representation
@@ -104,11 +105,11 @@ class Sentence():
         """
         Returns the set of all cells in self.cells known to be mines.
         """
-        if len(self.cells) == self.count and self.count > 0: # if all cells are mines
+        if len(self.cells) == self.count and self.count > 0:
             print(f"Mines identified: {self.cells}")
-            return self.cells # return all cells
+            return self.cells  # return all cells
         else:
-            return set() # otherwise return an empty set
+            return set()  # otherwise return an empty set
 
         raise NotImplementedError
 
@@ -116,28 +117,28 @@ class Sentence():
         """
         Returns the set of all cells in self.cells known to be safe.
         """
-        if self.count == 0: # if there are no mines
+        if self.count == 0:  # if there are no mines
             print(f"Safes identified: {self.cells}")
-            return self.cells # return all cells
+            return self.cells  # return all cells
         else:
-            return set() # otherwise return an empty set
+            return set()  # otherwise return an empty set
 
     def mark_mine(self, cell):
         """
         Updates internal knowledge representation given the fact that
         a cell is known to be a mine.
         """
-        if cell in self.cells: # if the cell is in the sentence
-            self.cells.remove(cell) # remove the cell
-            self.count -= 1 # decrement the count
+        if cell in self.cells:  # if the cell is in the sentence
+            self.cells.remove(cell)  # remove the cell
+            self.count -= 1  # decrement the count
 
     def mark_safe(self, cell):
         """
         Updates internal knowledge representation given the fact that
         a cell is known to be safe.
         """
-        if cell in self.cells: # if the cell is in the sentence
-            self.cells.remove(cell) # remove the cell
+        if cell in self.cells:  # if the cell is in the sentence
+            self.cells.remove(cell)  # remove the cell
 
 
 class MinesweeperAI():
@@ -217,7 +218,7 @@ class MinesweeperAI():
         if cell not in self.safes:
             self.mark_safe(cell)
 
-        # Create set to store undecided cells for KB
+        # Create set to store undecided cells
         new_sentence_cells = set()
 
         # Loop over cells by rows and columns
@@ -240,7 +241,7 @@ class MinesweeperAI():
 
                 # Add cell to new sentence cells
                 if 0 <= i < self.height and 0 <= j < self.width:
-                    new_sentence_cells.add((i , j))
+                    new_sentence_cells.add((i, j))
 
         # Add new sentence to knowledge base
         print(f"Adding new sentence: {new_sentence_cells} = {count}, based on the move {cell}")
@@ -255,8 +256,8 @@ class MinesweeperAI():
             mines = set()
 
             for sentence in self.knowledge:
-                safes = safes.union(sentence.known_safes()) # get all known safes from each sentence
-                mines = mines.union(sentence.known_mines()) # get all known mines from each sentence
+                safes = safes.union(sentence.known_safes())  # get all known safes
+                mines = mines.union(sentence.known_mines())  # get all known mines
 
             if safes:
                 knowledge_changed = True
@@ -288,7 +289,8 @@ class MinesweeperAI():
 
                         if new_sentence not in self.knowledge:
                             knowledge_changed = True
-                            print(f"Inferred new sentence: {new_sentence_cells} = {new_sentence_count}")
+                            print(
+                                f"Inferred new sentence: {new_sentence_cells}  = {new_sentence_count}")
                             self.knowledge.append(new_sentence)
 
         self.print_knowledge()
@@ -316,9 +318,9 @@ class MinesweeperAI():
             1) have not already been chosen, and
             2) are not known to be mines
         """
-        possible_moves = set(itertools.product(range(self.height), range(self.width))) # all possible moves
-        possible_moves = possible_moves - self.moves_made - self.mines # remove moves that have already been made or are mines
-        if possible_moves: # if there are possible moves
-            return random.choice(tuple(possible_moves)) # return a random move
+        possible_moves = set(itertools.product(range(self.height), range(self.width))) 
+        possible_moves = possible_moves - self.moves_made - self.mines 
+        if possible_moves: 
+            return random.choice(tuple(possible_moves)) 
         return None
 
