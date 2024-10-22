@@ -11,6 +11,7 @@ data = []
 for i in range(N):
     sample = model.sample(1)[0]
     # sample == "delayed"
+    # append the appointment value ony if train is delayed
     if sample[2] == 1.0:
-        data.append("attend" if sample[3] == 0 else "miss")
+        data.append("attend" if sample[3] == 0 else "miss") 
 print(Counter(data))
