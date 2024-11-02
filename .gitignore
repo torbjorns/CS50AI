@@ -5,4 +5,5 @@ tictactoe/tictactoe
 degrees/__pycache__
 /01 - minesweeper/minesweeper
 /02 - bayesnet/bayesnet
+/02 - pagerank/pagerank
 .venv
