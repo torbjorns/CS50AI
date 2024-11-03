@@ -35,8 +35,8 @@ def crawl(directory):
             continue
         with open(os.path.join(directory, filename)) as f:
             contents = f.read()
-            links = re.findall(r"<a\s+(?:[^>]*?)href=\"([^\"]*)\"", contents)
-            pages[filename] = set(links) - {filename}
+            links = re.findall(r"<a\s+(?:[^>]*?)href=\"([^\"]*)\"", contents) # Extract all links from the HTML file
+            pages[filename] = set(links) - {filename} # Remove the filename from the links
 
     # Only include links to other pages in the corpus
     for filename in pages:
@@ -85,15 +85,22 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
+    # Initialize page rank values, each one starting at 0
     page_rank = {page: 0 for page in corpus}
+    # Choose a random page to start
     page = random.choice(list(corpus.keys()))
     
+    # Sample n pages
     for _ in range(n):
+        # Increment the page rank of the current page, because we visited it
         page_rank[page] += 1
+        # Get the next page according to the transition model
         probabilities = transition_model(corpus, page, damping_factor)
+        # Choose the next page according to the probabilities
         page = random.choices(list(probabilities.keys()), weights=probabilities.values(), k=1)[0]
     
     for page in page_rank:
+        # Normalize the page rank values, by dividing by the number of samples
         page_rank[page] /= n
     
     return page_rank
@@ -109,22 +116,31 @@ def iterate_pagerank(corpus, damping_factor):
     PageRank values should sum to 1.
     """
     num_pages = len(corpus)
+    # Initialize page rank values, each one starting at 1 / N
     page_rank = {page: 1 / num_pages for page in corpus}
+    # Create a new dictionary to store the new page rank values
     new_page_rank = page_rank.copy()
     
+    # Iterate until convergence - when the difference between the new and old page rank values is less than 0.001
     while True:
         for page in corpus:
             total = 0
+            # iterate over all links in the corpus
             for link in corpus:
+                # If the page links to the link, add the page rank of the link divided by the number of links in the link
                 if page in corpus[link]:
                     total += page_rank[link] / len(corpus[link])
+                # If the page doesn't link to any other page, add the page rank of the link divided by the number of pages
                 if len(corpus[link]) == 0:
                     total += page_rank[link] / num_pages
+            # Calculate the new page rank value for the page
             new_page_rank[page] = (1 - damping_factor) / num_pages + damping_factor * total
         
+        # Check for convergence
         if all(abs(new_page_rank[page] - page_rank[page]) < 0.001 for page in page_rank):
             break
         
+        # Update the page rank values
         page_rank = new_page_rank.copy()
     
     return page_rank
