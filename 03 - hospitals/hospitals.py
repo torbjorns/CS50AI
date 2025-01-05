@@ -7,7 +7,7 @@ class Space():
         """Create a new state space with given dimensions."""
         self.height = height
         self.width = width
-        self.num_hospitals = num_hospitals # Number of hospitals to place
+        self.num_hospitals = num_hospitals
         self.houses = set()
         self.hospitals = set()
 
@@ -196,4 +196,5 @@ for i in range(15):
     s.add_house(random.randrange(s.height), random.randrange(s.width))
 
 # Use local search to determine hospital placement
-hospitals = s.hill_climb(image_prefix="hospitals", log=True)
+# hospitals = s.hill_climb(image_prefix="hospitals", log=True)
+hospitals = s.random_restart(20, image_prefix="hospitals", log=True)
