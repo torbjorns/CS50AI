@@ -22,17 +22,17 @@ def backtrack(assignment):
     """Runs backtracking search to find an assignment."""
 
     # Check if assignment is complete
-    if len(assignment) == len(VARIABLES):
+    if len(assignment) == len(VARIABLES): # If all variables are assigned
         return assignment
 
     # Try a new variable
     var = select_unassigned_variable(assignment)
-    for value in ["Monday", "Tuesday", "Wednesday"]:
-        new_assignment = assignment.copy()
-        new_assignment[var] = value
-        if consistent(new_assignment):
-            result = backtrack(new_assignment)
-            if result is not None:
+    for value in ["Monday", "Tuesday", "Wednesday"]: # Try all values
+        new_assignment = assignment.copy() # Create a new assignment
+        new_assignment[var] = value # Assign the variable
+        if consistent(new_assignment): 
+            result = backtrack(new_assignment) # Recurse
+            if result is not None: # If successful, return
                 return result
     return None
 
@@ -61,5 +61,5 @@ def consistent(assignment):
     return True
 
 
-solution = backtrack(dict())
+solution = backtrack(dict()) # Start with empty assignment, no variables assigned
 print(solution)

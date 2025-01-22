@@ -23,8 +23,8 @@ CONSTRAINTS = [
     ("F", "G")
 ]
 for x, y in CONSTRAINTS:
-    problem.addConstraint(lambda x, y: x != y, (x, y))
+    problem.addConstraint(lambda x, y: x != y, (x, y)) # x and y must be different
 
 # Solve problem
-for solution in problem.getSolutions():
+for solution in problem.getSolutions(): # Get all solutions
     print(solution)

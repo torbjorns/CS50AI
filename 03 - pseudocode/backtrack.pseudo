@@ -1,0 +1,14 @@
+function backtrack(assignment, csp) {
+  if assignment is complete: return assignment;
+
+  var = selectUnassignedVar(assignment, csp)
+  for value in DomainValues(var, assignment, csp) {
+    if value is consistent with assignment {
+      add {var = value} to assignment
+      result = backtrack(assignment, csp)
+      if result != failure: return result
+    }
+    remove {var = value} from assignment
+  }
+  return failure;
+}

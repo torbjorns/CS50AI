@@ -1,0 +1,12 @@
+function backtrack(assignment, csp)
+    if assignment is complete: return assignment;
+    var = selectUnassignedVar(assignment, csp)
+    for value in DomainValues(var, assignment, csp)
+        if value is consistent with assignment:
+            add {var = value} to assignment
+            inferences = Inference(assignment, csp) // running the inference function first
+            if inferences ≠ failure: add inferences to assignment
+            result = backtrack(assignment, csp) // run the backtrack function
+            if result != failure: return result
+        remove {var = value} and inferences from assignment
+    return failure;
