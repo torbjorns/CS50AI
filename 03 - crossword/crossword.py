@@ -3,23 +3,23 @@ class Variable():
     ACROSS = "across"
     DOWN = "down"
 
-    def __init__(self, i, j, direction, length):
+    def __init__(self, i, j, direction, length): # Create a new variable with starting point, direction, and length.
         """Create a new variable with starting point, direction, and length."""
         self.i = i
         self.j = j
         self.direction = direction
         self.length = length
         self.cells = []
-        for k in range(self.length):
+        for k in range(self.length): # Add each cell of the variable to its cell list.
             self.cells.append(
                 (self.i + (k if self.direction == Variable.DOWN else 0),
                  self.j + (k if self.direction == Variable.ACROSS else 0))
             )
 
-    def __hash__(self):
+    def __hash__(self): # Allow the variable to be a dict key
         return hash((self.i, self.j, self.direction, self.length))
 
-    def __eq__(self, other):
+    def __eq__(self, other): # Allow the variable to be a dict key
         return (
             (self.i == other.i) and
             (self.j == other.j) and
@@ -27,10 +27,10 @@ class Variable():
             (self.length == other.length)
         )
 
-    def __str__(self):
+    def __str__(self):  # Return a string representation of the variable
         return f"({self.i}, {self.j}) {self.direction} : {self.length}"
 
-    def __repr__(self):
+    def __repr__(self): # Return a string representation of the variable
         direction = repr(self.direction)
         return f"Variable({self.i}, {self.j}, {direction}, {self.length})"
 
@@ -69,7 +69,7 @@ class Crossword():
                 # Vertical words
                 starts_word = (
                     self.structure[i][j]
-                    and (i == 0 or not self.structure[i - 1][j])
+                    and (i == 0 or not self.structure[i - 1][j]) # Check if the cell is the start of a word
                 )
                 if starts_word:
                     length = 1
@@ -115,7 +115,7 @@ class Crossword():
                     continue
                 cells1 = v1.cells
                 cells2 = v2.cells
-                intersection = set(cells1).intersection(cells2)
+                intersection = set(cells1).intersection(cells2) # Find the intersection of the two variables
                 if not intersection:
                     self.overlaps[v1, v2] = None
                 else:
@@ -128,6 +128,6 @@ class Crossword():
     def neighbors(self, var):
         """Given a variable, return set of overlapping variables."""
         return set(
-            v for v in self.variables
+            v for v in self.variables # Iterate over all variables
             if v != var and self.overlaps[v, var]
         )
