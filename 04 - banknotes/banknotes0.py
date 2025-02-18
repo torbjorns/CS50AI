@@ -19,15 +19,15 @@ with open("banknotes.csv") as f:
     data = []
     for row in reader:
         data.append({
-            "evidence": [float(cell) for cell in row[:4]],
-            "label": "Authentic" if row[4] == "0" else "Counterfeit"
+            "evidence": [float(cell) for cell in row[:4]], # 4 features
+            "label": "Authentic" if row[4] == "0" else "Counterfeit" # 1 label
         })
 
 # Separate data into training and testing groups
-holdout = int(0.40 * len(data))
-random.shuffle(data)
-testing = data[:holdout]
-training = data[holdout:]
+holdout = int(0.40 * len(data)) # 40% of data for testing
+random.shuffle(data) # shuffle data before splitting
+testing = data[:holdout] # first 40% of data for testing, up until the holdout
+training = data[holdout:] # remaining 60% of data for training, after the holdout
 
 # Train model on training set
 X_training = [row["evidence"] for row in training]
