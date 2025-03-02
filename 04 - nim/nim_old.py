@@ -150,7 +150,7 @@ class NimAI():
         # Iterate through actions and find best possible
         for action in actions:
             action_value = self.q.get((tuple(state), action))
-            # If no value for this state, action yet, value is 0
+            # If no value, set value to 0
             action_value = action_value if action_value else 0
 
             if best_action_value == None or action_value > best_action_value:
